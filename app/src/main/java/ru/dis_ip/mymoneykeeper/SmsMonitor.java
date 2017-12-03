@@ -31,7 +31,7 @@ public class SmsMonitor extends BroadcastReceiver {
             String sms_from = messages[0].getDisplayOriginatingAddress();
 
             // Проверям от кого сообщение
-            if (sms_from.equalsIgnoreCase("999"))
+            if (sms_from.equalsIgnoreCase("900"))
             {
                 // Соберем текст
                 StringBuilder bodyText = new StringBuilder();
@@ -47,7 +47,8 @@ public class SmsMonitor extends BroadcastReceiver {
                 context.startService(mIntent);
 
                 // Прерываем дальнейшую рассылку
-                abortBroadcast();
+                // FIXME не работает отмена рассылки
+                // abortBroadcast();
             }
 
         }

@@ -4,8 +4,9 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.IBinder;
 
 /**
@@ -20,10 +21,17 @@ public class MoneySmsParserService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        String sms_body = intent.getExtras().getString("sms_body");
-        showNotification(sms_body);
-        return START_STICKY;
+
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            String sms_body = extras.getString("sms_body");
+            showNotification(sms_body);
+            return START_STICKY;
+        } else {
+            return START_NOT_STICKY;
+        }
     }
+
     private void showNotification(String text) {
         // The PendingIntent to launch our activity if the user selects this notification
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
@@ -34,7 +42,7 @@ public class MoneySmsParserService extends Service {
                 .setSmallIcon(R.mipmap.ic_launcher)  // the status icon
                 .setTicker(text)  // the status text
                 .setWhen(System.currentTimeMillis())  // the time stamp
-                .setContentTitle("Test")  // the label of the entry
+                .setContentTitle(getResources().getString(R.string.content_title))  // the label of the entry
                 .setContentText(text)  // the contents of the entry
                 .setContentIntent(contentIntent)  // The intent to send when the entry is clicked
                 .build();
@@ -42,5 +50,10 @@ public class MoneySmsParserService extends Service {
         NotificationManager mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         // Send the notification.
         mNM.notify(R.mipmap.ic_launcher, notification);
+
+        SharedPreferences sharedPref = getSharedPreferences("store_data", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("data_1", 555);
+        editor.apply();
     }
 }

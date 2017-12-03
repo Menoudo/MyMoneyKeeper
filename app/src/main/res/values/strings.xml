@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">My Money Keeper</string>
+    <string name="content_title">Сбербанк монитор</string>
 </resources>

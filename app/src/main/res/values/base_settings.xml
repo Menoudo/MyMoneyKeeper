@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bank_phone_number">999</string>
+    <string name="card_replenishment_mask">todo</string>
+    <string name="card_write_off_mask">todo</string>
+</resources>
